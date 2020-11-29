@@ -22,10 +22,10 @@ train_sequence, test_sequence, train_label, test_label = dataprocessor(text, lab
 model = CustomerReviewModel(vocabulary_size, embedding_dimension, sequence_length)
 model.compile(optimizer=Adam(learning_rate=0.01), loss=BinaryCrossentropy(), metrics=[Accuracy()])
 
-earlystopping = EarlyStopping(patience=7)
+earlystopping = EarlyStopping(patience=20)
 
 checkpoint_path = "training_1/cp.ckpt"
 checkpoint_dir = os.path.dirname(checkpoint_path)
 model_checkpoint = ModelCheckpoint(filepath=checkpoint_path, save_weights_only=True, save_best_only=True)
 
-model.fit(train_sequence, train_label, batch_size=8, epochs=25, callbacks=[earlystopping, model_checkpoint], validation_data=(test_sequence, test_label))
+model.fit(train_sequence, train_label, batch_size=8, epochs=50, callbacks=[earlystopping, model_checkpoint], validation_data=(test_sequence, test_label))
